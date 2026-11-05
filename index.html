@@ -529,14 +529,14 @@ function toggleMute() { muted = !muted; if (AC && M.master) M.master.gain.setTar
 function togglePause() {
   if (state !== 'play') return;
   paused = !paused; $('bPause').textContent = paused ? 'Resume' : 'Pause'; if (paused) musicPause(); else musicResume();
-  if (paused) showMsg({title: 'Paused', text: 'Nothing moves while you are paused.', hint: 'Arrow keys or WASD to move. P pauses, M mutes.', btn: 'Resume', fn: togglePause});
+  if (paused) showMsg({title: 'Paused', text: 'Nothing moves while you are paused.', hint: 'Arrow keys or WASD to move. P pauses, M mutes.', btn: 'Resume', credit: true, fn: togglePause});
   else hideMsg();
 }
 
 /* ---------- overlay + hud ---------- */
 function showMsg(o) {
   $('ovT').textContent = o.title; $('ovP').textContent = o.text || ''; $('ovP').hidden = !o.text;
-  $('ovLegend').hidden = !o.legend; $('ovCredit').hidden = !o.legend; $('ovC').textContent = o.hint || ''; $('ovC').hidden = !o.hint;
+  $('ovLegend').hidden = !o.legend; $('ovCredit').hidden = !(o.legend || o.credit); $('ovC').textContent = o.hint || ''; $('ovC').hidden = !o.hint;
   const b = $('ovBtn');
   if (o.btn) { b.hidden = false; b.textContent = o.btn; ovAction = o.fn; b.disabled = !!o.lock; if (!o.lock) b.focus({preventScroll: true}); }
   else { b.hidden = true; ovAction = null; }
