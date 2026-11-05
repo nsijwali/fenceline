@@ -15,3 +15,5 @@ The look rotates each level: Day, Night, Handheld. Each has its own palette, mus
 
 ## Music
 The background music is built around a two-note whistled call (C#5 then A4), generated live with WebAudio. No audio files are used.
+
+Created by [Nitin Sijwali](https://github.com/nsijwali).

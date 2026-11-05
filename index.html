@@ -84,11 +84,16 @@ button.primary:hover{background:var(--bg);color:var(--text)}
 .panel button.primary{background:var(--accent);color:var(--accent-ink)}
 .panel button.primary:hover{background:var(--panel);color:var(--panel-text)}
 .panel button:focus-visible{outline-color:var(--panel-text)}
+.panel .actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--s2) var(--s4)}
+.panel .credit{margin:0;color:var(--panel-muted);font-size:18px;line-height:28px}
+.panel .credit a{display:inline-block;padding:8px 0;color:var(--panel-text);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px;cursor:pointer}
+.panel .credit a:hover{background:var(--panel-text);color:var(--panel);text-decoration:none}
+.panel .credit a:focus-visible{outline:4px dotted var(--panel-text);outline-offset:4px}
 .legend{list-style:none;margin:0;padding:0;display:grid;gap:var(--s3)}
 .legend li{display:grid;grid-template-columns:44px 1fr;gap:var(--s3);align-items:center;font-size:18px;line-height:28px}
 .key{justify-self:center}
 #ov{touch-action:pan-y}
-@media (max-width:600px){#ov{align-items:flex-end;padding:var(--s3)}.panel{padding:var(--s4);gap:var(--s2)}.panel h2{font-size:27px;line-height:32px}.panel .fine{display:none}.panel:has(.legend:not([hidden])) #ovP{display:none}}
+@media (max-width:600px){#ov{align-items:flex-start;padding:var(--s3)}.panel{max-height:none;padding:var(--s4);gap:var(--s2)}.panel .credit a{padding:4px 0}.legend{gap:var(--s2)}.legend li{grid-template-columns:40px 1fr;gap:var(--s2);line-height:24px}.panel h2{font-size:27px;line-height:32px}.panel .fine{display:none}.panel:has(.legend:not([hidden])) #ovP{display:none}}
 
 #dpad{display:none;grid-template-columns:repeat(3,76px);grid-template-rows:repeat(3,48px);gap:var(--s3);grid-template-areas:"p u m" "l . r" ". d .";touch-action:none}
 #dpad button{margin:0;padding:0;min-height:0;font-size:36px;background:var(--panel);color:var(--panel-text);touch-action:none}
@@ -128,7 +133,8 @@ button.primary:hover{background:var(--bg);color:var(--text)}
           <li><canvas class="key" id="keyBaby" aria-hidden="true"></canvas><span><b>Crawlers.</b> Babies on the walls. Touch one and you lose a life.</span></li>
         </ul>
         <p class="fine" id="ovC"></p>
-        <button id="ovBtn" class="primary" type="button"></button>
+        <div class="actions"><button id="ovBtn" class="primary" type="button"></button>
+        <p class="credit" id="ovCredit" hidden>Created by <a href="https://github.com/nsijwali" target="_blank" rel="noopener noreferrer">Nitin Sijwali</a></p></div>
       </div>
     </div>
   </div>
@@ -489,7 +495,7 @@ addEventListener('keydown', e => {
   if (e.code === 'KeyP' || e.code === 'Escape') { togglePause(); return; }
   if (e.code === 'KeyM') { toggleMute(); return; }
   if (e.code === 'Space' || e.code === 'Enter') {
-    if (document.activeElement === $('ovBtn') || document.activeElement === $('bPause') || document.activeElement === $('bMute')) return;
+    if (document.activeElement.tagName === 'A' || document.activeElement === $('ovBtn') || document.activeElement === $('bPause') || document.activeElement === $('bMute')) return;
     e.preventDefault();
     if (state === 'title' || (state === 'over' && overT <= 0)) start(); else if (paused) togglePause();
   }
@@ -530,7 +536,7 @@ function togglePause() {
 /* ---------- overlay + hud ---------- */
 function showMsg(o) {
   $('ovT').textContent = o.title; $('ovP').textContent = o.text || ''; $('ovP').hidden = !o.text;
-  $('ovLegend').hidden = !o.legend; $('ovC').textContent = o.hint || ''; $('ovC').hidden = !o.hint;
+  $('ovLegend').hidden = !o.legend; $('ovCredit').hidden = !o.legend; $('ovC').textContent = o.hint || ''; $('ovC').hidden = !o.hint;
   const b = $('ovBtn');
   if (o.btn) { b.hidden = false; b.textContent = o.btn; ovAction = o.fn; b.disabled = !!o.lock; if (!o.lock) b.focus({preventScroll: true}); }
   else { b.hidden = true; ovAction = null; }
