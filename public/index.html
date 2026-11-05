@@ -59,7 +59,8 @@
 [hidden]{display:none!important}
 html,body{margin:0;background:var(--bg);color:var(--text);font:18px/28px var(--font-ui);font-synthesis:none;overflow-x:clip}
 html{height:100%}
-#app{--w:640px;--px:4px;height:100vh;height:100dvh;touch-action:none;user-select:none;-webkit-user-select:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s3);padding:var(--s2)}
+#app{--w:640px;--px:4px;height:100vh;height:100dvh;touch-action:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s3);padding:max(var(--s2),env(safe-area-inset-top)) max(var(--s2),env(safe-area-inset-right)) max(var(--s2),env(safe-area-inset-bottom)) max(var(--s2),env(safe-area-inset-left))}
+#app,#app *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* Pixel borders: a 4px box-shadow frame on each side leaves the corners notched, like a sprite outline. Type sits on a 2px pixel grid (18px = 9 font pixels). */
@@ -82,11 +83,12 @@ html{height:100%}
 .stats{display:flex;gap:var(--s5)}
 .st{display:flex;flex-direction:column;gap:var(--s1);min-width:0}
 .lbl{font-size:18px;line-height:18px;color:var(--muted)}
-.st b{font-size:27px;line-height:27px;font-weight:400}
+.st b{font-size:27px;line-height:27px;font-weight:400;white-space:nowrap}
 #hLives{color:var(--life);min-width:3.2em}
 .btns{display:flex;gap:var(--s4)}
 @media (max-width:640px){.mark{order:1}.btns{order:2}.stats{order:3;flex:1 1 100%;justify-content:space-between;gap:var(--s2)}}
 @media (pointer:coarse){.mark,.btns{display:none}.stats{flex:1 1 100%;justify-content:space-between;gap:var(--s2)}}
+@media (max-width:480px){.stats{gap:var(--s1)}.st b{font-size:22px;line-height:27px}#hLives{min-width:0}}
 @media (max-height:520px){.mark{display:none}}
 
 #prog{width:var(--hw,var(--w))}
@@ -591,8 +593,10 @@ function showMsg(o) {
   $('ov').classList.add('on'); say(o.title + '. ' + (o.text || ''));
 }
 function hideMsg() { $('ov').classList.remove('on'); $('ovBtn').blur(); }
+/* Compact numbers for the HUD so seven-digit scores fit a phone: 99999, 123K, 1.14M. */
+function fmtHud(n) { return n >= 1e6 ? (Math.floor(n / 1e4) / 100).toFixed(2) + 'M' : n >= 1e5 ? Math.floor(n / 1e3) + 'K' : String(n); }
 function updateHud() {
-  $('hScore').textContent = score; $('hBest').textContent = Math.max(best, score); $('hLevel').textContent = level;
+  $('hScore').textContent = fmtHud(score); $('hBest').textContent = fmtHud(Math.max(best, score)); $('hLevel').textContent = level;
   const n = Math.max(0, lives); $('hLives').textContent = '♥'.repeat(n); $('hLives').setAttribute('aria-label', n + ' lives');
   const p = Math.min(100, pct);
   $('barFill').style.width = p + '%'; $('barTick').style.left = target + '%';
@@ -833,9 +837,10 @@ function resize() {
   const dp = $('dpad'), dpH = getComputedStyle(dp).display === 'none' ? 0 : dp.offsetHeight + 8;
   const aspect = (W + 2 * MARGIN) / (H + 2 * MARGIN), availW = Math.min(innerWidth - 32, 1200);
   let cssW = availW;
+  const appCs = getComputedStyle($('app')), padV = parseFloat(appCs.paddingTop) + parseFloat(appCs.paddingBottom);
   for (let pass = 0; pass < 2; pass++) {
     $('app').style.setProperty('--w', cssW + 'px');
-    const used = $('hud').offsetHeight + $('prog').offsetHeight + dpH + 16 + 12 * 3 + 16;
+    const used = $('hud').offsetHeight + $('prog').offsetHeight + dpH + padV + 12 * 3 + 16;
     cssW = Math.max(220, Math.floor(Math.min(availW, (innerHeight - used) * aspect)));
   }
   const cssH = Math.floor(cssW / aspect);
@@ -846,6 +851,8 @@ function resize() {
   cs = cssW / (W + 2 * MARGIN);
 }
 addEventListener('resize', resize); addEventListener('orientationchange', resize);
+/* No text selection or long-press menu inside the game (the About text below stays selectable). */
+for (const ev of ['selectstart', 'contextmenu']) addEventListener(ev, e => { if (e.target instanceof Element && e.target.closest('#app')) e.preventDefault(); });
 let last = 0;
 function frame(t) {
   requestAnimationFrame(frame);
