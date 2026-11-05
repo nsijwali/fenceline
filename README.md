@@ -113,5 +113,8 @@ wrangler.jsonc        Cloudflare Workers config
 ## Search and sharing
 The page ships a canonical URL, Open Graph and Twitter tags, JSON-LD `VideoGame` data, a sitemap and `robots.txt`.
 
+## Licence
+MIT. See [LICENSE](LICENSE).
+
 ## Author
 Created by [Nitin Sijwali](https://www.linkedin.com/in/nitinsij/).
