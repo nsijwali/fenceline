@@ -57,14 +57,26 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
-html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font:18px/28px var(--font-ui);font-synthesis:none;overflow-x:clip;overflow-y:clip;touch-action:none;user-select:none;-webkit-user-select:none}
-#app{--w:640px;--px:4px;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s3);padding:var(--s2)}
+html,body{margin:0;background:var(--bg);color:var(--text);font:18px/28px var(--font-ui);font-synthesis:none;overflow-x:clip}
+html{height:100%}
+#app{--w:640px;--px:4px;height:100vh;height:100dvh;touch-action:none;user-select:none;-webkit-user-select:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s3);padding:var(--s2)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* Pixel borders: a 4px box-shadow frame on each side leaves the corners notched, like a sprite outline. Type sits on a 2px pixel grid (18px = 9 font pixels). */
 .bar,.panel,button,#c{--bc:var(--text);border:0;box-shadow:0 -4px 0 0 var(--bc),0 4px 0 0 var(--bc),-4px 0 0 0 var(--bc),4px 0 0 0 var(--bc)}
 .panel{--bc:var(--panel-text)}
 
+/* About text: lives below the game so the page has crawlable words. */
+#about{box-sizing:border-box;width:min(40rem,100% - 32px);margin:0 auto;padding:var(--s6,48px) 0 var(--s6,48px);display:grid;gap:var(--s3)}
+#about h2{margin:0;font-size:27px;line-height:32px;font-weight:400}
+#about h3{margin:var(--s3) 0 0;font-size:18px;line-height:28px;font-weight:400;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+#about p,#about ol{margin:0}
+#about ol{list-style:none;padding:0;counter-reset:step;display:grid;gap:var(--s2)}
+#about li{counter-increment:step;display:grid;grid-template-columns:3ch 1fr}
+#about li::before{content:counter(step) "."}
+#about a{color:inherit;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+#about a:hover{background:var(--text);color:var(--bg);text-decoration:none}
+#about a:focus-visible{outline:4px dotted var(--text);outline-offset:4px}
 #hud{width:var(--hw,var(--w));display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--s2) var(--s5)}
 .mark{margin:0;font-size:27px;line-height:27px;font-weight:400}
 .stats{display:flex;gap:var(--s5)}
@@ -165,6 +177,21 @@ button.primary:hover{background:var(--bg);color:var(--text)}
   </div>
   <p id="sr" class="sr" aria-live="polite"></p>
 </div>
+<section id="about" aria-labelledby="aboutT">
+  <h2 id="aboutT">About Fenceline</h2>
+  <p>Fenceline is a free pixel arcade game that runs in your browser. It follows the territory-claiming tradition of Qix and Volfied, drawn in the style of the offline dinosaur page. There is no login, no ads and nothing to download. Once the page has loaded it works without a connection.</p>
+  <h3>How to play</h3>
+  <ol>
+    <li>Walk along the walls with the arrow keys or WASD, or swipe on a touch screen.</li>
+    <li>Step into open ground to start a fence, then reach a wall to close it.</li>
+    <li>Land the pterodactyl cannot reach becomes yours. Claim the target percentage to clear the level.</li>
+    <li>Keep your unfinished fence away from the pterodactyl's dotted line, and stay clear of the crawling babies on the walls.</li>
+  </ol>
+  <h3>Three looks, one soundtrack</h3>
+  <p>Every level switches between the Day, Night and Handheld looks. Each has its own palette, land texture and arrangement of the music, which is built around a two-note whistled call and generated live in your browser.</p>
+  <h3>Made by</h3>
+  <p>Created by <a href="https://www.linkedin.com/in/nitinsij/" target="_blank" rel="noopener noreferrer">Nitin Sijwali</a>. The source is on <a href="https://github.com/nsijwali/fenceline" target="_blank" rel="noopener noreferrer">GitHub</a>.</p>
+</section>
 <noscript>Fenceline is a free pixel arcade game. Draw fences across open ground to claim land before the pterodactyl reaches your line. It needs JavaScript to run.</noscript>
 <script>
 'use strict';
