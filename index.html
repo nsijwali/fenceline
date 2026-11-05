@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en" data-theme="day">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Fenceline</title>
+<meta name="description" content="Fenceline is a free offline arcade game. Draw fences across open ground to claim land before the pterodactyl reaches your line.">
+<meta name="theme-color" content="#f7f7f7">
+<style>
+@font-face{font-family:"Fenceline Pixel";src:url(data:font/woff;base64,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) format("woff");font-display:block}
+/* Pixel look after the offline dinosaur page. One token set, three palettes, rotated by level: Day, Night, Handheld. */
+:root{
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;
+  --font-ui:"Fenceline Pixel",ui-monospace,Menlo,Consolas,"Courier New",monospace;
+  --font-display:var(--font-ui);
+  /* Day: the dinosaur page. Off-white, one grey ink. */
+  --bg:#f7f7f7;--text:#535353;--muted:#6b6b6b;--line:#b4b4b4;
+  --panel:#f7f7f7;--panel-text:#535353;--panel-muted:#6b6b6b;
+  --accent:#535353;--accent-ink:#f7f7f7;--focus:#535353;--life:#535353;
+  --ground:#f7f7f7;--land:#e1e1e1;--land-ink:#a9a9a9;--edge:#535353;--post:#f7f7f7;
+  --trail:#535353;--wisp:#535353;--ember:#9a9a9a;--player:#535353;
+}
+:root[data-theme="night"]{
+  --bg:#1e1f22;--text:#ececec;--muted:#a3a3a8;--line:#55565c;
+  --panel:#1e1f22;--panel-text:#ececec;--panel-muted:#a3a3a8;
+  --accent:#ececec;--accent-ink:#1e1f22;--focus:#ececec;--life:#ececec;
+  --ground:#1e1f22;--land:#2c2d31;--land-ink:#4d4e55;--edge:#ececec;--post:#1e1f22;
+  --trail:#ececec;--wisp:#ececec;--ember:#8e8e94;--player:#ececec;
+}
+:root[data-theme="handheld"]{
+  --bg:#9bbc0f;--text:#0b2a0b;--muted:#143514;--line:#306230;
+  --panel:#8bac0f;--panel-text:#0b2a0b;--panel-muted:#143514;
+  --accent:#0b2a0b;--accent-ink:#9bbc0f;--focus:#0b2a0b;--life:#0b2a0b;
+  --ground:#9bbc0f;--land:#8bac0f;--land-ink:#306230;--edge:#0b2a0b;--post:#9bbc0f;
+  --trail:#0b2a0b;--wisp:#0b2a0b;--ember:#306230;--player:#0b2a0b;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font:18px/28px var(--font-ui);font-synthesis:none;overflow-x:clip;overflow-y:clip;touch-action:none;user-select:none;-webkit-user-select:none}
+#app{--w:640px;--px:4px;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s3);padding:var(--s2)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Pixel borders: a 4px box-shadow frame on each side leaves the corners notched, like a sprite outline. Type sits on a 2px pixel grid (18px = 9 font pixels). */
+.bar,.panel,button,#c{--bc:var(--text);border:0;box-shadow:0 -4px 0 0 var(--bc),0 4px 0 0 var(--bc),-4px 0 0 0 var(--bc),4px 0 0 0 var(--bc)}
+.panel{--bc:var(--panel-text)}
+
+#hud{width:var(--hw,var(--w));display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--s2) var(--s5)}
+.mark{margin:0;font-size:27px;line-height:27px;font-weight:400}
+.stats{display:flex;gap:var(--s5)}
+.st{display:flex;flex-direction:column;gap:var(--s1);min-width:0}
+.lbl{font-size:18px;line-height:18px;color:var(--muted)}
+.st b{font-size:27px;line-height:27px;font-weight:400}
+#hLives{color:var(--life);min-width:3.2em}
+.btns{display:flex;gap:var(--s4)}
+@media (max-width:640px){.mark{order:1}.btns{order:2}.stats{order:3;flex:1 1 100%;justify-content:space-between;gap:var(--s2)}}
+@media (pointer:coarse){.mark,.btns{display:none}.stats{flex:1 1 100%;justify-content:space-between;gap:var(--s2)}}
+@media (max-height:520px){.mark{display:none}}
+
+#prog{width:var(--hw,var(--w))}
+.bar{position:relative;height:16px;margin:4px;background:var(--panel)}
+#barFill{position:absolute;inset:0 auto 0 0;width:0;background:var(--accent)}
+#barTick{position:absolute;top:-4px;bottom:-4px;width:4px;margin-left:-2px;background:var(--text);box-shadow:0 0 0 2px var(--bg)}
+.prow{display:flex;justify-content:space-between;margin-top:var(--s3);font-size:18px;line-height:18px;color:var(--muted)}
+
+#wrap{position:relative;line-height:0;margin:4px}
+canvas{display:block;image-rendering:pixelated}
+
+button{display:inline-flex;align-items:center;justify-content:center;font:400 18px/18px var(--font-ui);min-height:44px;margin:4px;padding:0 var(--s4);border-radius:0;background:transparent;color:var(--text);cursor:pointer}
+button:hover{background:var(--text);color:var(--bg)}
+button:active{transform:translateY(4px)}
+button:focus-visible{outline:4px dotted var(--focus);outline-offset:8px}
+button:disabled{opacity:.5;cursor:not-allowed}
+button.primary{background:var(--accent);color:var(--accent-ink)}
+button.primary:hover{background:var(--bg);color:var(--text)}
+
+#ov{position:absolute;inset:0;display:none;align-items:center;justify-content:flex-start;padding:var(--s5);line-height:1.4;overflow:auto;background:color-mix(in srgb,var(--bg) 70%,transparent)}
+#ov.on{display:flex}
+.panel{width:min(30rem,100%);max-height:100%;margin:4px;display:grid;gap:var(--s3);padding:var(--s5);background:var(--panel);color:var(--panel-text)}
+.panel h2{margin:0;min-width:0;text-wrap:balance;font-size:36px;line-height:40px;font-weight:400}
+.panel p{margin:0;max-width:65ch;font-size:18px;line-height:28px}
+.panel .fine{color:var(--panel-muted)}
+.panel button{justify-self:start;background:var(--panel);color:var(--panel-text)}
+.panel button:hover{background:var(--panel-text);color:var(--panel)}
+.panel button.primary{background:var(--accent);color:var(--accent-ink)}
+.panel button.primary:hover{background:var(--panel);color:var(--panel-text)}
+.panel button:focus-visible{outline-color:var(--panel-text)}
+.legend{list-style:none;margin:0;padding:0;display:grid;gap:var(--s3)}
+.legend li{display:grid;grid-template-columns:44px 1fr;gap:var(--s3);align-items:center;font-size:18px;line-height:28px}
+.key{justify-self:center}
+#ov{touch-action:pan-y}
+@media (max-width:600px){#ov{align-items:flex-end;padding:var(--s3)}.panel{padding:var(--s4);gap:var(--s2)}.panel h2{font-size:27px;line-height:32px}.panel .fine{display:none}.panel:has(.legend:not([hidden])) #ovP{display:none}}
+
+#dpad{display:none;grid-template-columns:repeat(3,76px);grid-template-rows:repeat(3,48px);gap:var(--s3);grid-template-areas:"p u m" "l . r" ". d .";touch-action:none}
+#dpad button{margin:0;padding:0;min-height:0;font-size:36px;background:var(--panel);color:var(--panel-text);touch-action:none}
+#dpad #bPause,#dpad #bMute{font-size:18px}#dpad #bPause{grid-area:p}#dpad #bMute{grid-area:m}#dpad [data-d=l] .ar{transform:rotate(-90deg)}#dpad [data-d=r] .ar{transform:rotate(90deg)}#dpad [data-d=d] .ar{transform:rotate(180deg)}#dpad [data-d=u]{grid-area:u}#dpad [data-d=l]{grid-area:l}#dpad [data-d=r]{grid-area:r}#dpad [data-d=d]{grid-area:d}
+@media (pointer:coarse){#dpad{display:grid}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="hud">
+    <h1 class="mark">Fenceline</h1>
+    <div class="stats">
+      <div class="st"><span class="lbl">Score</span><b id="hScore">0</b></div>
+      <div class="st"><span class="lbl">Best</span><b id="hBest">0</b></div>
+      <div class="st"><span class="lbl">Level</span><b id="hLevel">1</b></div>
+      <div class="st"><span class="lbl">Lives</span><b id="hLives"></b></div>
+    </div>
+    <div class="btns">
+      <button id="bPause" type="button">Pause</button>
+      <button id="bMute" type="button">Mute</button>
+    </div>
+  </header>
+  <div id="prog" role="progressbar" aria-label="Land claimed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="bar"><div id="barFill"></div><div id="barTick"></div></div>
+    <div class="prow"><span id="pctTxt">Claimed 0%</span><span id="tgtTxt">Target 70%</span></div>
+  </div>
+  <div id="wrap">
+    <canvas id="c" role="img" aria-label="Fenceline playfield"></canvas>
+    <div id="ov" role="dialog" aria-modal="true" aria-labelledby="ovT">
+      <div class="panel">
+        <h2 id="ovT"></h2>
+        <p id="ovP"></p>
+        <ul class="legend" id="ovLegend" hidden>
+          <li><canvas class="key" id="keyYou" aria-hidden="true"></canvas><span><b>You.</b> Walk the walls. Step into open ground to draw.</span></li>
+          <li><canvas class="key" id="keyPtero" aria-hidden="true"></canvas><span><b>Pterodactyl.</b> Its dotted line is deadly to your unfinished line.</span></li>
+          <li><canvas class="key" id="keyBaby" aria-hidden="true"></canvas><span><b>Crawlers.</b> Babies on the walls. Touch one and you lose a life.</span></li>
+        </ul>
+        <p class="fine" id="ovC"></p>
+        <button id="ovBtn" class="primary" type="button"></button>
+      </div>
+    </div>
+  </div>
+  <div id="dpad">
+    <button data-d="u" type="button" aria-label="Up"><svg class="ar" viewBox="0 0 5 3" width="20" height="12" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M2 0h1v1H2zM1 1h3v1H1zM0 2h5v1H0z"/></svg></button><button data-d="l" type="button" aria-label="Left"><svg class="ar" viewBox="0 0 5 3" width="20" height="12" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M2 0h1v1H2zM1 1h3v1H1zM0 2h5v1H0z"/></svg></button>
+    <button data-d="r" type="button" aria-label="Right"><svg class="ar" viewBox="0 0 5 3" width="20" height="12" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M2 0h1v1H2zM1 1h3v1H1zM0 2h5v1H0z"/></svg></button><button data-d="d" type="button" aria-label="Down"><svg class="ar" viewBox="0 0 5 3" width="20" height="12" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M2 0h1v1H2zM1 1h3v1H1zM0 2h5v1H0z"/></svg></button>
+  </div>
+  <p id="sr" class="sr" aria-live="polite"></p>
+</div>
+<noscript>Fenceline needs JavaScript to run.</noscript>
+<script>
+'use strict';
+/* Fenceline: draw fences to claim land. One file, no assets, no network, no accounts. */
+let W = 96, H = 64, N = W * H;
+const MARGIN = 1, SUB = 3;                  // field margin in cells; territory texture is drawn at 3x
+const L = {x:-1,y:0}, R = {x:1,y:0}, U = {x:0,y:-1}, D = {x:0,y:1};
+const $ = id => document.getElementById(id);
+const cv = $('c'), ctx = cv.getContext('2d');
+const off = document.createElement('canvas'), octx = off.getContext('2d');
+let img = null;
+const grid = new Uint8Array(96 * 64);       // 0 open, 1 claimed, 2 trail
+const edgeF = new Uint8Array(96 * 64);
+let edgeList = [];
+const idx = (x, y) => y * W + x;
+const inb = (x, y) => x >= 0 && y >= 0 && x < W && y < H;
+const rand = (a, b) => a + Math.random() * (b - a);
+const ri = (a, b) => Math.floor(rand(a, b + 1));
+const at = (x, y) => { const ix = Math.floor(x), iy = Math.floor(y); return (ix < 0 || iy < 0 || ix >= W || iy >= H) ? 1 : grid[iy * W + ix]; };
+const RM = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+const THEMES = ['day', 'night', 'handheld'];
+const LOOK = {
+  day:      {name: 'Day',      kind: 'speckle', stars: false},
+  night:    {name: 'Night',    kind: 'speckle', stars: true},
+  handheld: {name: 'Handheld', kind: 'checker', stars: false}
+};
+let themeIdx = 0, P = {};
+
+let state = 'title', paused = false, ovAction = null;
+let level = 1, score = 0, lives = 3, best = 0, target = 70, base = 0, pct = 0;
+let px = 0, py = 0, drawing = false, origin = {x:0,y:0}, trail = [];
+let wisps = [], sparks = [], popups = [], stars = [], clouds = [];
+let inv = 0, freeze = 0, shake = 0, clearT = 0, overT = 0, pAcc = 0, time = 0, dirty = true, dpr = 1, cs = 8;
+const P_INT = 0.04;                         // seconds per player step
+try { best = +localStorage.getItem('fenceline.best') || 0; } catch (e) {}
+
+/* ---------- pixel font: 5x7, hand drawn, used for the wordmark, HUD, buttons and score popups ---------- */
+const GLYPH = {
+  A:'01110 10001 10001 11111 10001 10001 10001', B:'11110 10001 10001 11110 10001 10001 11110', C:'01110 10001 10000 10000 10000 10001 01110',
+  D:'11110 10001 10001 10001 10001 10001 11110', E:'11111 10000 10000 11110 10000 10000 11111', F:'11111 10000 10000 11110 10000 10000 10000',
+  G:'01110 10001 10000 10111 10001 10001 01111', H:'10001 10001 10001 11111 10001 10001 10001', I:'01110 00100 00100 00100 00100 00100 01110',
+  J:'00111 00010 00010 00010 00010 10010 01100', K:'10001 10010 10100 11000 10100 10010 10001', L:'10000 10000 10000 10000 10000 10000 11111',
+  M:'10001 11011 10101 10101 10001 10001 10001', N:'10001 11001 10101 10011 10001 10001 10001', O:'01110 10001 10001 10001 10001 10001 01110',
+  P:'11110 10001 10001 11110 10000 10000 10000', Q:'01110 10001 10001 10001 10101 10010 01101', R:'11110 10001 10001 11110 10100 10010 10001',
+  S:'01111 10000 10000 01110 00001 00001 11110', T:'11111 00100 00100 00100 00100 00100 00100', U:'10001 10001 10001 10001 10001 10001 01110',
+  V:'10001 10001 10001 10001 10001 01010 00100', W:'10001 10001 10001 10101 10101 11011 10001', X:'10001 10001 01010 00100 01010 10001 10001',
+  Y:'10001 10001 01010 00100 00100 00100 00100', Z:'11111 00001 00010 00100 01000 10000 11111',
+  0:'01110 10001 10011 10101 11001 10001 01110', 1:'00100 01100 00100 00100 00100 00100 01110', 2:'01110 10001 00001 00010 00100 01000 11111',
+  3:'11110 00001 00001 01110 00001 00001 11110', 4:'00010 00110 01010 10010 11111 00010 00010', 5:'11111 10000 11110 00001 00001 10001 01110',
+  6:'00110 01000 10000 11110 10001 10001 01110', 7:'11111 00001 00010 00100 01000 01000 01000', 8:'01110 10001 10001 01110 10001 10001 01110',
+  9:'01110 10001 10001 01111 00001 00010 01100',
+  '%':'11001 11010 00010 00100 01000 01011 10011', '.':'00000 00000 00000 00000 00000 01100 01100', '+':'00000 00100 00100 11111 00100 00100 00000',
+  '-':'00000 00000 00000 11111 00000 00000 00000', '♥':'01010 11111 11111 11111 01110 00100 00000', ' ':'00000 00000 00000 00000 00000 00000 00000'
+};
+function textCanvas(text, color, outline) {
+  const t = String(text).toUpperCase().split('').filter(ch => GLYPH[ch]), pad = outline ? 1 : 0;
+  const c = document.createElement('canvas'); c.width = Math.max(1, t.length * 6 - 1) + 2 * pad; c.height = 7 + 2 * pad;
+  const x = c.getContext('2d');
+  const paint = (col, dx, dy) => {
+    x.fillStyle = col;
+    t.forEach((ch, n) => GLYPH[ch].split(' ').forEach((row, j) => { for (let i = 0; i < 5; i++) if (row[i] === '1') x.fillRect(n * 6 + i + pad + dx, j + pad + dy, 1, 1); }));
+  };
+  if (outline) for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) if (a || b) paint(outline, a, b);
+  paint(color, 0, 0);
+  return c;
+}
+const popCache = {};
+
+/* ---------- theme ---------- */
+function hex(s) { s = s.replace('#', ''); return [parseInt(s.slice(0, 2), 16), parseInt(s.slice(2, 4), 16), parseInt(s.slice(4, 6), 16)]; }
+function readPalette() {
+  const st = getComputedStyle(document.documentElement), g = n => st.getPropertyValue(n).trim();
+  P = {
+    bg: g('--bg'), ground: g('--ground'), edge: g('--edge'), post: g('--post'), line: g('--line'), muted: g('--muted'), text: g('--text'),
+    trail: g('--trail'), wisp: g('--wisp'), ember: g('--ember'), player: g('--player'), font: g('--font-ui'),
+    land: g('--land'),
+    landRGB: hex(g('--land')), inkRGB: hex(g('--land-ink'))
+  };
+  buildSprites();
+  const meta = document.querySelector('meta[name=theme-color]');
+  if (meta) meta.setAttribute('content', P.bg);
+}
+/* Sprites: k = outline ink, w = light fill, r = mid tone. One sprite pixel = 1/3 of a grid cell, the same grid as the land texture. */
+const ART = {
+  baby: [[
+    '...............kk.', '.........kkkkkkkkk', '.........kwwwwwwwk', '.........kwkwwwkwk', '.........kwwwwwwwk', '.........kwwkkkwwk',
+    '..kkkkkk..kkkkkkk.', '.kwwwwwwk.kwwk....', 'krrrrrrrk.kwwk....', '.kkkkkkkk.kkkk....', '.kwk..kwk.........', '.kkk..kkk.........'
+  ], [
+    '...............kk.', '.........kkkkkkkkk', '.........kwwwwwwwk', '.........kwkwwwkwk', '.........kwwwwwwwk', '.........kwwkkkwwk',
+    '..kkkkkk..kkkkkkk.', '.kwwwwwwk.kwwk....', 'krrrrrrrk.kwwk....', '.kkkkkkkk.kkkk....', '...kwk.kwk........', '...kkk.kkk........'
+  ]],
+  ptero: [[
+    'k...................k', 'kk.................kk', '.kk.......k.......kk.', '..kk.....kkk.....kk..', '...kkk..kkkkk..kkk...',
+    '.....kkkkwkwkkkk.....', '.......kkkkkkk.......', '........kkkkk........', '.........kkk.........'
+  ], [
+    '.........kkk.........', '........kkkkk........', '.....kkkkwkwkkkk.....', '...kkk..kkkkk..kkk...', '..kk.....kkk.....kk..',
+    '.kk.......k.......kk.', 'kk.................kk', 'k...................k', '.....................'
+  ]],
+  kid: [[
+    '....kkk....', '....kkk....', '..kkkkkkk..', '.kkkkkkkkk.', '.kwwwwwwwk.', '.kwkwwwkwk.',
+    '.kwwwwwwwk.', '.kwwkkkwwk.', '..kwwwwwk..', '.kkkkkkkkk.', 'kkkkkkkkkkk', 'kkkkkkkkkkk'
+  ], [
+    '....kkk....', '....kkk....', '..kkkkkkk..', '.kkkkkkkkk.', '.kwwwwwwwk.', '.kwkwwwkwk.',
+    '.kwwwwwwwk.', '.kwkkkkkwk.', '..kwwwwwk..', '.krrrrrrrk.', 'krrrrrrrrrk', 'krrrrrrrrrk'
+  ]],
+  cloud: [[
+    '......kkkk......', '..kkkk....kk....', 'kk..........kkkk', 'k..............k', '.kkkkkkkkkkkkkk.'
+  ]]
+};
+let SPR = {};
+function lum(c) { const [r, g, b] = hex(c); return .2126 * r + .7152 * g + .0722 * b; }
+function makeSprite(rows, col, halo) {
+  const w = Math.max(...rows.map(r => r.length)), h = rows.length, pad = halo ? 1 : 0;
+  rows = rows.map(r => r.padEnd(w, '.'));
+  const c = document.createElement('canvas'); c.width = w + 2 * pad; c.height = h + 2 * pad;
+  const x = c.getContext('2d');
+  if (halo) {                                          // 1px light outline separates figures from walls and ground
+    x.fillStyle = P.halo;
+    for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) if (rows[j][i] !== '.')
+      for (let a = -1; a <= 1; a++) for (let b = -1; b <= 1; b++) x.fillRect(i + pad + a, j + pad + b, 1, 1);
+  }
+  for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
+    const k = rows[j][i]; if (k === '.') continue;
+    x.fillStyle = col[k]; x.fillRect(i + pad, j + pad, 1, 1);
+  }
+  return c;
+}
+function drawKey(id, spr) {
+  const key = $(id); if (!key) return;
+  key.width = spr.width; key.height = spr.height;
+  key.style.width = spr.width * 2 + 'px'; key.style.height = spr.height * 2 + 'px';
+  const kx = key.getContext('2d'); kx.imageSmoothingEnabled = false; kx.clearRect(0, 0, key.width, key.height); kx.drawImage(spr, 0, 0);
+}
+function buildSprites() {
+  const cand = [P.bg, P.text, P.ground, P.land].filter(c => /^#[0-9a-f]{6}$/i.test(c));
+  cand.sort((a, b) => lum(a) - lum(b));
+  P.dark = cand[0]; P.light = cand[cand.length - 1]; P.halo = P.light;
+  const col = {k: P.dark, w: P.light, r: P.ember};
+  SPR = {
+    baby: ART.baby.map(r => makeSprite(r, col, true)),
+    ptero: ART.ptero.map(r => makeSprite(r, col, true)),
+    kid: ART.kid.map(r => makeSprite(r, col, true)),
+    cloud: makeSprite(ART.cloud[0], {k: P.line}, false),
+    trail: makeSprite(['x.x', '.x.', 'x.x'], {x: P.trail}, false),
+    pit: makeSprite(['x'], {x: P.post}, false),
+    dot: makeSprite(['x'], {x: P.wisp}, false)
+  };
+  drawKey('keyYou', SPR.kid[0]); drawKey('keyPtero', SPR.ptero[0]); drawKey('keyBaby', SPR.baby[0]);
+}
+function setTheme(i) {
+  themeIdx = i; document.documentElement.dataset.theme = THEMES[i];
+  readPalette(); dirty = true;
+}
+function setDims(w, h) {
+  W = w; H = h; N = w * h;
+  off.width = W * SUB; off.height = H * SUB; img = octx.createImageData(off.width, off.height);
+  stars = []; for (let i = 0; i < 60; i++) stars.push({x: rand(1, W - 1), y: rand(1, H - 1)});
+  clouds = []; for (let i = 0; i < 4; i++) clouds.push({x: rand(0, W), y: rand(3, H * .7), sp: rand(.5, 1.3)});
+  dirty = true; resize();
+}
+
+/* ---------- audio (WebAudio synth, created on first gesture) ---------- */
+let AC = null, muted = false;
+function ac() {
+  if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} }
+  if (AC && AC.state === 'suspended') AC.resume();
+}
+function tone(f, d, type, v, slide, delay) {
+  if (!AC || muted) return;
+  const t = AC.currentTime + (delay || 0);
+  const o = AC.createOscillator(), g = AC.createGain();
+  o.type = type || 'square';
+  o.frequency.setValueAtTime(f, t);
+  if (slide) o.frequency.exponentialRampToValueAtTime(Math.max(30, f + slide), t + d);
+  g.gain.setValueAtTime(v || .05, t);
+  g.gain.exponentialRampToValueAtTime(.0001, t + d);
+  o.connect(g); g.connect(AC.destination);
+  o.start(t); o.stop(t + d + .02);
+}
+function sfx(k, n) {
+  if (k === 'start') tone(180, .06, 'square', .03);
+  else if (k === 'claim') { const m = Math.min(6, 2 + Math.floor((n || 0) / 120)); for (let i = 0; i < m; i++) tone(330 * Math.pow(1.26, i), .12, 'triangle', .07, 0, i * .06); }
+  else if (k === 'die') { tone(260, .5, 'sawtooth', .09, -220); tone(90, .6, 'square', .06, -40, .05); }
+  else if (k === 'clear') [262, 330, 392, 523, 659].forEach((f, i) => tone(f, .22, 'square', .06, 0, i * .09));
+  else if (k === 'over') [392, 330, 262, 196].forEach((f, i) => tone(f, .3, 'triangle', .08, 0, i * .18));
+}
+/* ---------- music: the whistled two-note call (C#5 then A4, one per bar) built out into a chiptune loop per look ---------- */
+const hz = m => 440 * Math.pow(2, (m - 69) / 12);
+const MASTER = .45;
+const TRACKS = [
+  {name: 'Day', bpm: 92, wave: 'triangle', kick: [0, 8], snare: false, hats: 'sparse', echo: true, motif: [[0, 4, 73], [4, 4, 69]],
+   bars: [[45, [69, 73, 76]], [42, [66, 69, 73]], [38, [66, 69, 74]], [45, [69, 73, 76]], [45, [69, 73, 76]], [42, [66, 69, 73]], [38, [66, 69, 74]], [40, [68, 71, 76]]]},
+  {name: 'Night', bpm: 72, wave: 'sine', kick: [0], snare: false, hats: 'none', echo: true, motif: [[0, 4, 73], [4, 4, 69]],
+   bars: [[42, [66, 69, 73]], [38, [66, 69, 74]], [45, [69, 73, 76]], [40, [68, 71, 76]], [42, [66, 69, 73]], [38, [66, 69, 74]], [45, [69, 73, 76]], [40, [68, 71, 76]]]},
+  {name: 'Handheld', bpm: 104, wave: 'pulse', kick: [0, 8], snare: false, hats: 'sparse', echo: false, motif: [[0, 4, 78], [4, 4, 74]],
+   bars: [[38, [74, 78, 81]], [47, [71, 74, 78]], [43, [71, 74, 79]], [45, [73, 76, 81]], [38, [74, 78, 81]], [47, [71, 74, 78]], [43, [71, 74, 79]], [45, [73, 76, 81]]]}
+];
+const M = {ctx: null, bus: null, master: null, send: null, noise: null, pulse: null, on: false, track: -1, step: 0, nextT: 0, timer: 0};
+function musicBus() {
+  if (M.ctx === AC && M.bus) return;
+  M.ctx = AC;
+  const comp = AC.createDynamicsCompressor(), soft = AC.createBiquadFilter(), master = AC.createGain();
+  soft.type = 'lowpass'; soft.frequency.value = 2600; soft.Q.value = .4;     // takes the buzz off the square and pulse waves
+  master.gain.value = muted ? 0 : MASTER; comp.connect(soft); soft.connect(master); master.connect(AC.destination);
+  const send = AC.createGain(), dly = AC.createDelay(1), fb = AC.createGain();
+  send.gain.value = 0; dly.delayTime.value = .36; fb.gain.value = .38;
+  send.connect(dly); dly.connect(fb); fb.connect(dly); dly.connect(comp);
+  const n = AC.createBuffer(1, AC.sampleRate, AC.sampleRate), d = n.getChannelData(0);
+  for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  const re = new Float32Array(65), im = new Float32Array(65), duty = .25;   // 25% pulse, a classic NES lead
+  for (let k = 1; k < 65; k++) { re[k] = Math.sin(2 * Math.PI * k * duty) / (k * Math.PI); im[k] = (1 - Math.cos(2 * Math.PI * k * duty)) / (k * Math.PI); }
+  M.bus = comp; M.master = master; M.send = send; M.noise = n; M.pulse = AC.createPeriodicWave(re, im);
+}
+function mNote(m, t, dur, type, vol, vib) {
+  const o = AC.createOscillator(), g = AC.createGain();
+  if (type === 'pulse') o.setPeriodicWave(M.pulse); else o.type = type;
+  o.frequency.value = hz(m);
+  if (vib) {                                            // the whistle: a light vibrato that arrives after the attack
+    const l = AC.createOscillator(), lg = AC.createGain();
+    l.frequency.value = 5.5; lg.gain.setValueAtTime(0, t); lg.gain.linearRampToValueAtTime(9, t + .14);
+    l.connect(lg); lg.connect(o.detune); l.start(t); l.stop(t + dur + .03);
+  }
+  g.gain.setValueAtTime(.0001, t); g.gain.linearRampToValueAtTime(vol, t + (vib ? .03 : .012));
+  g.gain.setValueAtTime(vol, t + Math.max(.04, dur - .12)); g.gain.linearRampToValueAtTime(.0001, t + dur);
+  o.connect(g); g.connect(M.bus); if (vib) g.connect(M.send);
+  o.start(t); o.stop(t + dur + .03);
+}
+function mNoise(t, dur, vol, type, freq) {
+  const src = AC.createBufferSource(), f = AC.createBiquadFilter(), g = AC.createGain();
+  src.buffer = M.noise; f.type = type; f.frequency.value = freq;
+  g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
+  src.connect(f); f.connect(g); g.connect(M.bus); src.start(t, Math.random() * .5); src.stop(t + dur + .02);
+}
+function mKick(t) {
+  const o = AC.createOscillator(), g = AC.createGain();
+  o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(45, t + .1);
+  g.gain.setValueAtTime(.1, t); g.gain.exponentialRampToValueAtTime(.0001, t + .2);
+  o.connect(g); g.connect(M.bus); o.start(t); o.stop(t + .18);
+}
+function musicStep(T, step, t) {
+  const bar = (step / 16) | 0, s = step % 16, root = T.bars[bar][0], tones = T.bars[bar][1], sp = 60 / T.bpm / 4;
+  for (const [ms, len, m] of T.motif) if (ms === s) mNote(m, t, len * sp * .96, T.wave, .11, true);      // the whistled call
+  if (s >= 8 && s % 2 === 0) mNote(tones[[0, 1, 2, 1][(s - 8) / 2]], t, sp * 1.8, 'triangle', .04, false); // answer in the gap
+  if (s % 2 === 0) mNote(root + [0, 0, 12, 0, 0, 0, 12, 7][s / 2], t, sp * 1.9, 'triangle', .09, false);   // bass
+  if (T.kick.includes(s)) mKick(t);
+  if (T.snare && (s === 4 || s === 12)) { mNoise(t, .1, .07, 'bandpass', 1800); }
+  if (T.hats === 'sparse' && (s === 4 || s === 12)) mNoise(t, .05, .012, 'bandpass', 5500);
+}
+function musicTick() {
+  if (!M.on || !AC) return;
+  const T = TRACKS[M.track], sp = 60 / T.bpm / 4;
+  while (M.nextT < AC.currentTime + .18) {
+    musicStep(T, M.step, M.nextT);
+    M.nextT += sp; M.step = (M.step + 1) % (T.bars.length * 16);
+  }
+}
+function musicStart(i) {
+  if (!AC) return;
+  musicBus(); clearInterval(M.timer);
+  M.track = i; M.step = 0; M.nextT = AC.currentTime + .1; M.on = true;
+  M.send.gain.value = TRACKS[i].echo ? .34 : 0;
+  M.timer = setInterval(musicTick, 25);
+}
+function musicPause() { M.on = false; clearInterval(M.timer); }
+function musicResume() { if (!AC || M.track < 0) return; M.nextT = AC.currentTime + .08; M.on = true; clearInterval(M.timer); M.timer = setInterval(musicTick, 25); }
+function musicStop() { musicPause(); M.track = -1; }
+function musicDuck() {
+  if (!AC || !M.master || muted) return;
+  M.master.gain.setTargetAtTime(.12, AC.currentTime, .03);
+  setTimeout(() => { if (M.master) M.master.gain.setTargetAtTime(muted ? 0 : MASTER, AC.currentTime, .15); }, 700);
+}
+const say = t => { $('sr').textContent = t; };
+
+/* ---------- helpers ---------- */
+function hasOpenNeighbor(x, y) {
+  for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+    if (!dx && !dy) continue;
+    const nx = x + dx, ny = y + dy;
+    if (inb(nx, ny) && grid[idx(nx, ny)] === 0) return true;
+  }
+  return false;
+}
+function isEdge(x, y) {
+  if (!inb(x, y) || grid[idx(x, y)] !== 1) return false;
+  for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+    if (!dx && !dy) continue;
+    const nx = x + dx, ny = y + dy;
+    if (inb(nx, ny) && grid[idx(nx, ny)] !== 1) return true;
+  }
+  return false;
+}
+function randEdge(minD) {
+  const c = [];
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++)
+    if (isEdge(x, y) && Math.abs(x - px) + Math.abs(y - py) >= minD) c.push(idx(x, y));
+  return c.length ? c[ri(0, c.length - 1)] : -1;
+}
+const wispSpeed = () => Math.min(52, 22 + level * 2.5);
+const sparkInterval = () => Math.max(.04, .1 - .006 * level);
+const targetFor = lv => Math.min(80, 69 + lv);
+
+/* ---------- level setup ---------- */
+function newLevel(n) {
+  const portrait = innerHeight > innerWidth * 1.05, nw = portrait ? 64 : 96, nh = portrait ? 96 : 64;
+  if (nw !== W || nh !== H || !img) setDims(nw, nh);
+  setTheme((n - 1) % 3);
+  level = n; target = targetFor(n); grid.fill(0);
+  for (let x = 0; x < W; x++) { grid[idx(x, 0)] = 1; grid[idx(x, H - 1)] = 1; }
+  for (let y = 0; y < H; y++) { grid[idx(0, y)] = 1; grid[idx(W - 1, y)] = 1; }
+  const want = n < 2 ? 0 : Math.min(8, n + 1), pil = [];
+  const hub = {x: W / 2 - 12, y: H / 2 - 8, w: 24, h: 16};
+  const hit = (a, b, m) => a.x < b.x + b.w + m && a.x + a.w + m > b.x && a.y < b.y + b.h + m && a.y + a.h + m > b.y;
+  for (let t = 0; pil.length < want && t < 300; t++) {
+    const w = ri(3, 8), h = ri(3, 6), p = {x: ri(8, W - 8 - w), y: ri(8, H - 8 - h), w, h};
+    if (hit(p, hub, 0) || pil.some(q => hit(p, q, 5))) continue;
+    pil.push(p);
+    for (let y = p.y; y < p.y + h; y++) for (let x = p.x; x < p.x + w; x++) grid[idx(x, y)] = 1;
+  }
+  base = 0; for (let i = 0; i < N; i++) if (grid[i] === 1) base++;
+  pct = 0; dirty = true;
+  px = W >> 1; py = H - 1; drawing = false; trail = []; origin = {x: px, y: py};
+  popups = []; inv = 1.2; freeze = 0; pAcc = 0;
+  wisps = [];
+  const wc = n < 3 ? 1 : n < 6 ? 2 : 3;
+  for (let i = 0; i < wc; i++) {
+    let x, y, t = 0;
+    do { x = ri(W / 2 - 14, W / 2 + 14); y = ri(H / 2 - 10, H / 2 + 10); } while (grid[idx(x, y)] !== 0 && ++t < 200);
+    const a = rand(0, 6.283), sp = wispSpeed();
+    wisps.push({x: x + .5, y: y + .5, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, a: rand(0, 6.283), da: rand(-3, 3), len: 7, turnT: rand(.4, 1.2), hist: []});
+  }
+  sparks = [];
+  const sc = Math.min(4, 1 + ((n - 1) >> 1));
+  for (let i = 0; i < sc; i++) {
+    const e = randEdge(30);
+    if (e >= 0) sparks.push({x: e % W, y: (e / W) | 0, dx: 1, dy: 0, t: rand(0, .05)});
+  }
+  updateHud();
+}
+
+/* ---------- input ---------- */
+const keys = []; let dpadDir = null, swipeDir = null;
+const KD = {ArrowLeft:L, KeyA:L, ArrowRight:R, KeyD:R, ArrowUp:U, KeyW:U, ArrowDown:D, KeyS:D};
+const getDir = () => dpadDir || swipeDir || keys[keys.length - 1] || null;
+addEventListener('keydown', e => {
+  ac();
+  const d = KD[e.code];
+  if (d) { e.preventDefault(); if (!keys.includes(d)) keys.push(d); if (state === 'title') start(); return; }
+  if (e.code === 'KeyP' || e.code === 'Escape') { togglePause(); return; }
+  if (e.code === 'KeyM') { toggleMute(); return; }
+  if (e.code === 'Space' || e.code === 'Enter') {
+    if (document.activeElement === $('ovBtn') || document.activeElement === $('bPause') || document.activeElement === $('bMute')) return;
+    e.preventDefault();
+    if (state === 'title' || (state === 'over' && overT <= 0)) start(); else if (paused) togglePause();
+  }
+});
+addEventListener('keyup', e => { const d = KD[e.code]; if (d) { const i = keys.indexOf(d); if (i >= 0) keys.splice(i, 1); } });
+addEventListener('blur', () => { keys.length = 0; dpadDir = swipeDir = null; if (state === 'play' && !paused) togglePause(); });
+document.addEventListener('visibilitychange', () => { if (document.hidden && state === 'play' && !paused) togglePause(); });
+document.querySelectorAll('#dpad button').forEach(b => {
+  const d = {u:U, d:D, l:L, r:R}[b.dataset.d];
+  b.addEventListener('pointerdown', e => { e.preventDefault(); ac(); dpadDir = d; if (state === 'title') start(); });
+  const up = () => { if (dpadDir === d) dpadDir = null; };
+  b.addEventListener('pointerup', up); b.addEventListener('pointerleave', up); b.addEventListener('pointercancel', up);
+});
+let sx = 0, sy = 0;
+$('wrap').addEventListener('pointerdown', e => { ac(); sx = e.clientX; sy = e.clientY; });
+$('wrap').addEventListener('pointermove', e => {
+  if (e.buttons === 0 && e.pointerType === 'mouse') return;
+  const dx = e.clientX - sx, dy = e.clientY - sy;
+  if (Math.max(Math.abs(dx), Math.abs(dy)) > 14) {
+    swipeDir = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? R : L) : (dy > 0 ? D : U);
+    sx = e.clientX; sy = e.clientY;
+  }
+});
+const endSwipe = () => { swipeDir = null; };
+addEventListener('pointerup', endSwipe); addEventListener('pointercancel', endSwipe);
+$('bPause').addEventListener('click', () => { ac(); togglePause(); });
+$('bMute').addEventListener('click', () => { ac(); toggleMute(); });
+if (window.matchMedia && matchMedia('(pointer:coarse)').matches) $('dpad').append($('bPause'), $('bMute'));
+$('ovBtn').addEventListener('click', () => { ac(); if (ovAction) ovAction(); });
+function toggleMute() { muted = !muted; if (AC && M.master) M.master.gain.setTargetAtTime(muted ? 0 : MASTER, AC.currentTime, .02); $('bMute').textContent = muted ? 'Unmute' : 'Mute'; }
+function togglePause() {
+  if (state !== 'play') return;
+  paused = !paused; $('bPause').textContent = paused ? 'Resume' : 'Pause'; if (paused) musicPause(); else musicResume();
+  if (paused) showMsg({title: 'Paused', text: 'Nothing moves while you are paused.', hint: 'Arrow keys or WASD to move. P pauses, M mutes.', btn: 'Resume', fn: togglePause});
+  else hideMsg();
+}
+
+/* ---------- overlay + hud ---------- */
+function showMsg(o) {
+  $('ovT').textContent = o.title; $('ovP').textContent = o.text || ''; $('ovP').hidden = !o.text;
+  $('ovLegend').hidden = !o.legend; $('ovC').textContent = o.hint || ''; $('ovC').hidden = !o.hint;
+  const b = $('ovBtn');
+  if (o.btn) { b.hidden = false; b.textContent = o.btn; ovAction = o.fn; b.disabled = !!o.lock; if (!o.lock) b.focus({preventScroll: true}); }
+  else { b.hidden = true; ovAction = null; }
+  $('ov').classList.add('on'); say(o.title + '. ' + (o.text || ''));
+}
+function hideMsg() { $('ov').classList.remove('on'); $('ovBtn').blur(); }
+function updateHud() {
+  $('hScore').textContent = score; $('hBest').textContent = Math.max(best, score); $('hLevel').textContent = level;
+  const n = Math.max(0, lives); $('hLives').textContent = '♥'.repeat(n); $('hLives').setAttribute('aria-label', n + ' lives');
+  const p = Math.min(100, pct);
+  $('barFill').style.width = p + '%'; $('barTick').style.left = target + '%';
+  $('pctTxt').textContent = 'Claimed ' + Math.floor(pct) + '%'; $('tgtTxt').textContent = 'Target ' + target + '%';
+  $('prog').setAttribute('aria-valuenow', String(Math.floor(p)));
+}
+
+/* ---------- game flow ---------- */
+function start() {
+  score = 0; lives = 3; paused = false; $('bPause').textContent = 'Pause'; sfx('start');
+  newLevel(1); state = 'play'; hideMsg(); musicStart(0); say('Level 1. ' + LOOK[THEMES[0]].name + '.');
+}
+function gameOver() {
+  state = 'over'; overT = .8; musicStop(); sfx('over');
+  const isBest = score > best;
+  if (isBest) { best = score; try { localStorage.setItem('fenceline.best', String(best)); } catch (e) {} }
+  updateHud();
+  showMsg({title: 'Game over', text: 'Score ' + score + ' on level ' + level + (isBest ? '. New best.' : '. Best is ' + best + '.'), btn: 'Play again', fn: start, lock: true});
+}
+function die(spark) {
+  if (inv > 0 || state !== 'play') return;
+  lives--; if (!RM) shake = .45; freeze = .55; sfx('die'); musicDuck(); say('Life lost. ' + Math.max(0, lives) + ' left.');
+  if (drawing) { for (const i of trail) grid[i] = 0; trail = []; drawing = false; px = origin.x; py = origin.y; }
+  if (spark) relocateSpark(spark);
+  inv = 2; updateHud();
+  if (lives <= 0) gameOver();
+}
+function levelClear() {
+  state = 'clear'; clearT = 2.4; musicStop(); sfx('clear');
+  const bonus = 1000 * level + Math.max(0, lives) * 500;
+  score += bonus; updateHud();
+  showMsg({title: 'Level ' + level + ' cleared', text: 'Bonus ' + bonus + '. Next look: ' + LOOK[THEMES[level % 3]].name + '.'});
+}
+function nextLevel() {
+  level++; if (level % 3 === 1 && lives < 5) lives++;
+  newLevel(level); state = 'play'; hideMsg(); musicStart(themeIdx); say('Level ' + level + '. ' + LOOK[THEMES[themeIdx]].name + '.');
+}
+
+/* ---------- player ---------- */
+function stepPlayer() {
+  const d = getDir(); if (!d) return;
+  const nx = px + d.x, ny = py + d.y;
+  if (!inb(nx, ny)) return;
+  const c = grid[idx(nx, ny)];
+  if (!drawing) {
+    if (c === 1) { px = nx; py = ny; }
+    else if (c === 0) { drawing = true; trail = []; origin = {x: px, y: py}; grid[idx(nx, ny)] = 2; trail.push(idx(nx, ny)); px = nx; py = ny; tone(500, .03, 'square', .015); }
+  } else {
+    if (c === 2) return;
+    if (c === 0) { grid[idx(nx, ny)] = 2; trail.push(idx(nx, ny)); px = nx; py = ny; tone(500 + trail.length * 2, .03, 'square', .015); }
+    else { px = nx; py = ny; closeTrail(); }
+  }
+}
+function closeTrail() {
+  const n0 = trail.length;
+  for (const i of trail) grid[i] = 1;
+  trail = []; drawing = false;
+  const vis = new Uint8Array(N), q = new Int32Array(N); let h = 0, t = 0;
+  for (const w of wisps) {
+    const s = idx(Math.floor(w.x), Math.floor(w.y));
+    if (grid[s] === 0 && !vis[s]) { vis[s] = 1; q[t++] = s; }
+  }
+  while (h < t) {
+    const i = q[h++], x = i % W, y = (i / W) | 0;
+    if (x > 0 && grid[i - 1] === 0 && !vis[i - 1]) { vis[i - 1] = 1; q[t++] = i - 1; }
+    if (x < W - 1 && grid[i + 1] === 0 && !vis[i + 1]) { vis[i + 1] = 1; q[t++] = i + 1; }
+    if (y > 0 && grid[i - W] === 0 && !vis[i - W]) { vis[i - W] = 1; q[t++] = i - W; }
+    if (y < H - 1 && grid[i + W] === 0 && !vis[i + W]) { vis[i + W] = 1; q[t++] = i + W; }
+  }
+  let filled = 0;
+  for (let i = 0; i < N; i++) if (grid[i] === 0 && !vis[i]) { grid[i] = 1; filled++; }
+  const gained = n0 + filled;
+  let claimed = 0; for (let i = 0; i < N; i++) if (grid[i] === 1) claimed++;
+  pct = Math.max(0, (claimed - base) / (N - base) * 100);
+  const pts = gained * 10 + Math.floor(gained * gained / 20);
+  score += pts; dirty = true;
+  popups.push({x: px, y: py - 1, text: '+' + pts, life: 1.3});
+  sfx('claim', gained); updateHud();
+  if (pct >= target) levelClear();
+}
+
+/* ---------- enemies ---------- */
+function updateWisp(w, dt) {
+  const sp = Math.hypot(w.vx, w.vy), steps = Math.max(1, Math.ceil(sp * dt / .4)), hh = dt / steps;
+  for (let s = 0; s < steps; s++) {
+    w.turnT -= hh;
+    if (w.turnT <= 0) {
+      const a = (Math.random() - .5) * 1.4, c = Math.cos(a), sn = Math.sin(a);
+      const vx = w.vx * c - w.vy * sn, vy = w.vx * sn + w.vy * c; w.vx = vx; w.vy = vy; w.turnT = rand(.5, 1.7);
+    }
+    const nx = w.x + w.vx * hh, ny = w.y + w.vy * hh;
+    const cx = at(nx, w.y), cy = at(w.x, ny), cd = at(nx, ny);
+    if (cx === 2 || cy === 2 || cd === 2) { die(); return; }
+    let bx = cx !== 0, by = cy !== 0;
+    if (!bx && !by && cd !== 0) bx = by = true;
+    if (bx) w.vx = -w.vx; else w.x = nx;
+    if (by) w.vy = -w.vy; else w.y = ny;
+  }
+  w.da += (Math.random() - .5) * dt * 10; w.da = Math.max(-6, Math.min(6, w.da)); w.a += w.da * dt;
+  const ends = [];
+  for (const sg of [1, -1]) {
+    const ca = Math.cos(w.a) * sg, sa = Math.sin(w.a) * sg; let t = 0;
+    for (; t < w.len; t += .5) {
+      const v = at(w.x + ca * t, w.y + sa * t);
+      if (v === 2) { die(); return; }
+      if (v !== 0) break;
+    }
+    ends.push(w.x + ca * t, w.y + sa * t);
+  }
+  w.hist.push(ends); if (w.hist.length > 9) w.hist.shift();
+}
+function moveSpark(s) {
+  const dirs = [[1,0],[0,1],[-1,0],[0,-1]], opts = []; let back = null;
+  for (const d of dirs) {
+    if (!isEdge(s.x + d[0], s.y + d[1])) continue;
+    if (d[0] === -s.dx && d[1] === -s.dy) back = d; else opts.push(d);
+  }
+  let pick = null;
+  if (opts.length) {
+    const fwd = opts.find(d => d[0] === s.dx && d[1] === s.dy);
+    pick = (fwd && (opts.length === 1 || Math.random() > .2)) ? fwd : opts[ri(0, opts.length - 1)];
+  } else if (back) pick = back;
+  if (!pick) { relocateSpark(s); return; }
+  s.dx = pick[0]; s.dy = pick[1]; s.x += pick[0]; s.y += pick[1];
+}
+function relocateSpark(s) {
+  const e = randEdge(25);
+  if (e >= 0) { s.x = e % W; s.y = (e / W) | 0; s.dx = 1; s.dy = 0; }
+}
+function sparkHit() {
+  if (drawing || inv > 0) return;
+  for (const s of sparks) if (s.x === px && s.y === py) { die(s); return; }
+}
+
+/* ---------- update ---------- */
+function update(dt) {
+  time += dt;
+  if (!RM && !paused) for (const c of clouds) { c.x -= c.sp * dt; if (c.x < -8) c.x = W + 4; }
+  if (shake > 0) shake = Math.max(0, shake - dt);
+  for (const p of popups) p.life -= dt;
+  popups = popups.filter(p => p.life > 0);
+  if (state === 'over' && overT > 0) { overT -= dt; if (overT <= 0) { $('ovBtn').disabled = false; $('ovBtn').focus({preventScroll: true}); } }
+  if (state === 'title') { if (!RM) for (const w of wisps) updateWisp(w, dt); return; }
+  if (paused) return;
+  if (state === 'clear') { clearT -= dt; if (clearT <= 0) nextLevel(); return; }
+  if (state !== 'play') return;
+  if (freeze > 0) { freeze -= dt; return; }
+  if (inv > 0) inv -= dt;
+  pAcc += dt;
+  while (pAcc >= P_INT) {
+    pAcc -= P_INT;
+    if (!getDir()) { pAcc = 0; break; }
+    stepPlayer();
+    if (state !== 'play') return;
+  }
+  pAcc = Math.min(pAcc, P_INT * 3);
+  for (const w of wisps) { updateWisp(w, dt); if (state !== 'play' || freeze > 0) return; }
+  const si = sparkInterval();
+  for (const s of sparks) { s.t += dt; while (s.t >= si) { s.t -= si; moveSpark(s); } }
+  sparkHit();
+}
+
+/* ---------- rendering ---------- */
+const hsh = (a, b, c) => { let h = (a * 374761393 + b * 668265263 + c * 1013904223) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+function rebuildTerritory() {
+  if (!img) return;
+  const w3 = W * SUB, h3 = H * SUB, d = img.data, kind = LOOK[THEMES[themeIdx]].kind;
+  edgeList = [];
+  for (let i = 0; i < N; i++) { edgeF[i] = (grid[i] === 1 && hasOpenNeighbor(i % W, (i / W) | 0)) ? 1 : 0; if (edgeF[i]) edgeList.push(i); }
+  for (let sy = 0; sy < h3; sy++) {
+    const cy = (sy / SUB) | 0;
+    for (let sx = 0; sx < w3; sx++) {
+      const cx = (sx / SUB) | 0, ci = cy * W + cx, o = (sy * w3 + sx) * 4;
+      if (grid[ci] !== 1) { d[o + 3] = 0; continue; }
+      let ink;
+      if (kind === 'speckle') ink = hsh(sx, sy, level) < .06;      // desert grit, fixed per level so it never shimmers
+      else ink = (sx & 1) === 0 && (sy & 1) === 0;                  // 1-in-4 checker, a handheld dither
+      const c = ink ? P.inkRGB : P.landRGB;
+      d[o] = c[0]; d[o + 1] = c[1]; d[o + 2] = c[2]; d[o + 3] = 255;
+    }
+  }
+  octx.putImageData(img, 0, 0); dirty = false;
+}
+function blit(spr, cx, cy, flip, rot) {
+  const w = spr.width / SUB, h = spr.height / SUB;
+  ctx.save(); ctx.translate(Math.round(cx * SUB) / SUB, Math.round(cy * SUB) / SUB);
+  if (rot) ctx.rotate(rot);
+  if (flip) ctx.scale(-1, 1);
+  ctx.drawImage(spr, -w / 2, -h / 2, w, h);
+  ctx.restore();
+}
+function draw() {
+  if (dirty) rebuildTerritory();
+  const k = dpr * cs, look = LOOK[THEMES[themeIdx]], U = 1 / SUB;
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height);
+  ctx.setTransform(k, 0, 0, k, k * MARGIN, k * MARGIN);
+  if (shake > 0) ctx.translate((Math.random() - .5) * shake * 2, (Math.random() - .5) * shake * 2);
+  ctx.imageSmoothingEnabled = false;
+  ctx.fillStyle = P.ground; ctx.fillRect(0, 0, W, H);
+  if (look.stars) { ctx.fillStyle = P.line; for (const s of stars) ctx.fillRect(Math.round(s.x * SUB) / SUB, Math.round(s.y * SUB) / SUB, U, U); }
+  for (const c of clouds) ctx.drawImage(SPR.cloud, Math.round(c.x * SUB) / SUB, Math.round(c.y * SUB) / SUB, SPR.cloud.width / SUB, SPR.cloud.height / SUB);
+  if (img) ctx.drawImage(off, 0, 0, W, H);
+  // walls are the ground line: crisp cells, with a few pits knocked out like the dinosaur's horizon
+  ctx.fillStyle = P.edge;
+  for (const i of edgeList) ctx.fillRect(i % W, (i / W) | 0, 1, 1);
+  for (const i of edgeList) { const x = i % W, y = (i / W) | 0; if (hsh(x, y, 7) < .14) ctx.drawImage(SPR.pit, x + U, y + U, U, U); }
+  for (const i of trail) ctx.drawImage(SPR.trail, i % W, (i / W) | 0, 1, 1);
+  // pterodactyls: dotted flight line (the part that kills) plus the sprite on top
+  wisps.forEach((w, n) => {
+    const e = w.hist[w.hist.length - 1];
+    if (e) for (let q = 0; q < 2; q++) {
+      const ex = e[q * 2] - w.x, ey = e[q * 2 + 1] - w.y, len = Math.hypot(ex, ey), steps = Math.floor(len / U);
+      for (let i = 9; i <= steps; i += 2) ctx.drawImage(SPR.dot, Math.round((w.x + ex * i * U / len) * SUB) / SUB, Math.round((w.y + ey * i * U / len) * SUB) / SUB, U, U);
+    }
+    blit(SPR.ptero[(Math.floor(time * 6) + n) & 1], w.x, w.y, w.vx > 0, 0);
+  });
+  // crawlers
+  sparks.forEach((s, n) => {
+    const spr = SPR.baby[(Math.floor(time * 5) + n) & 1];
+    blit(spr, s.x + .5, s.y + .5, s.dx < 0, s.dx < 0 ? 0 : s.dy > 0 ? Math.PI / 2 : s.dy < 0 ? -Math.PI / 2 : 0);
+  });
+  // player
+  const blink = inv > 0 && Math.floor(time * 12) % 2 === 0;
+  if (!blink && state !== 'title') blit(SPR.kid[drawing ? 1 : 0], px + .5, py + .5, false, 0);
+  // popups
+  for (const p of popups) {
+    const key = p.text + P.text + P.bg, tc = popCache[key] || (popCache[key] = textCanvas(p.text, P.text, P.bg));
+    ctx.globalAlpha = Math.min(1, p.life * 1.5);
+    const yy = p.y - (1.3 - p.life) * 3, w = tc.width / SUB, h = tc.height / SUB;
+    ctx.drawImage(tc, Math.round((p.x + .5 - w / 2) * SUB) / SUB, Math.round((yy - h) * SUB) / SUB, w, h);
+  }
+  ctx.globalAlpha = 1;
+}
+
+/* ---------- layout + loop ---------- */
+function resize() {
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const dp = $('dpad'), dpH = getComputedStyle(dp).display === 'none' ? 0 : dp.offsetHeight + 8;
+  const aspect = (W + 2 * MARGIN) / (H + 2 * MARGIN), availW = Math.min(innerWidth - 32, 1200);
+  let cssW = availW;
+  for (let pass = 0; pass < 2; pass++) {
+    $('app').style.setProperty('--w', cssW + 'px');
+    const used = $('hud').offsetHeight + $('prog').offsetHeight + dpH + 16 + 12 * 3 + 16;
+    cssW = Math.max(220, Math.floor(Math.min(availW, (innerHeight - used) * aspect)));
+  }
+  const cssH = Math.floor(cssW / aspect);
+  $('app').style.setProperty('--w', cssW + 'px');
+  $('app').style.setProperty('--hw', Math.max(cssW, Math.min(innerWidth - 32, 320)) + 'px');
+  cv.style.width = cssW + 'px'; cv.style.height = cssH + 'px';
+  cv.width = Math.round(cssW * dpr); cv.height = Math.round(cssH * dpr);
+  cs = cssW / (W + 2 * MARGIN);
+}
+addEventListener('resize', resize); addEventListener('orientationchange', resize);
+let last = 0;
+function frame(t) {
+  requestAnimationFrame(frame);
+  const dt = Math.min(.1, Math.max(0, (t - last) / 1000)); last = t;
+  update(dt); draw();
+}
+resize();
+newLevel(1);                 // a live backdrop for the title screen
+showMsg({title: 'Fenceline', text: 'Draw from a wall into open ground and back. Whatever the pterodactyl cannot reach is yours. Claim 70% to clear a level. Each level gets a new look.',
+  legend: true, hint: 'Arrows or WASD to move. Swipe on touch. P pauses, M mutes.', btn: 'Play', fn: start});
+updateHud();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
