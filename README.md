@@ -33,4 +33,4 @@ To use another domain, change the host in `wrangler.jsonc` and replace `https://
 2. Sitemaps > submit `https://fenceline.nitinsijwali.com/sitemap.xml`.
 3. URL Inspection > paste the home URL > Request indexing.
 
-Created by [Nitin Sijwali](https://github.com/nsijwali).
+Created by [Nitin Sijwali](https://www.linkedin.com/in/nitinsij/).
