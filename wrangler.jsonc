@@ -8,5 +8,6 @@
   },
   "routes": [
     { "pattern": "fenceline.nitinsijwali.com", "custom_domain": true }
-  ]
+  ],
+  "previews": {}
 }
