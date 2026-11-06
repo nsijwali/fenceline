@@ -138,12 +138,12 @@ button.primary:hover{background:var(--bg);color:var(--text)}
 .panel .credit a:hover{background:var(--panel-text);color:var(--panel);text-decoration:none}
 .panel .credit a:focus-visible{outline:4px dotted var(--panel-text);outline-offset:4px}
 .legend{list-style:none;margin:0;padding:0;display:grid;gap:var(--s3)}
-.legend li{display:grid;grid-template-columns:44px 1fr;gap:var(--s3);align-items:center;font-size:18px;line-height:28px}
+.legend li{display:grid;grid-template-columns:44px minmax(0,1fr);overflow-wrap:anywhere;gap:var(--s3);align-items:center;font-size:18px;line-height:28px}
 .key{justify-self:center}
 #ov{touch-action:pan-y}
 /* Small or short screens: the panel scrolls, but Play stays pinned at the bottom of the board. */
-@media (max-width:600px),(max-height:520px){.panel{display:flex;flex-direction:column;max-height:none;padding:var(--s3);gap:var(--s2)}.panel h2{font-size:27px;line-height:32px}.panel .fine{display:none}.panel:has(.legend:not([hidden])) #ovP{display:none}.panel:has(.legend:not([hidden])) .quick:not([hidden]){display:block}.panel .actions{display:contents}.panel #ovBtn{position:sticky;bottom:0;align-self:stretch;margin:var(--s1);outline:var(--s2) solid var(--panel)}.panel .credit{order:1}}
-@media (max-width:600px){#ov{align-items:flex-start;padding:var(--s3)}.panel{max-height:none;padding:var(--s4);gap:var(--s2)}.panel .credit a{padding:4px 0}.legend{gap:var(--s2)}.legend li{grid-template-columns:40px 1fr;gap:var(--s2);line-height:24px}.panel h2{font-size:27px;line-height:32px}.panel .fine{display:none}.panel:has(.legend:not([hidden])) #ovP{display:none}.panel:has(.legend:not([hidden])) .quick:not([hidden]){display:block}}
+@media (max-width:600px),(max-height:520px){.panel{display:flex;flex-direction:column;max-height:none;padding:var(--s3);gap:var(--s2)}.panel h2{font-size:27px;line-height:32px}.panel .fine{display:none}.panel:has(.legend:not([hidden])) #ovP{display:none}.panel:has(.legend:not([hidden])) .quick:not([hidden]){display:block}.panel .actions{display:contents}.panel #ovBtn{position:sticky;bottom:0;align-self:stretch;margin:var(--s1);box-shadow:0 0 0 var(--s2) var(--panel)}.panel .credit{order:1}}
+@media (max-width:600px){#ov{align-items:flex-start;padding:var(--s3)}.panel{margin:0;max-height:none;padding:var(--s4);gap:var(--s2)}.panel .credit a{padding:4px 0}.legend{gap:var(--s2)}.legend li{grid-template-columns:40px minmax(0,1fr);gap:var(--s2);line-height:24px}.panel h2{font-size:27px;line-height:32px}.panel .fine{display:none}.panel:has(.legend:not([hidden])) #ovP{display:none}.panel:has(.legend:not([hidden])) .quick:not([hidden]){display:block}}
 
 #dpad{display:none;grid-template-columns:repeat(3,76px);grid-template-rows:repeat(3,48px);gap:var(--s3);grid-template-areas:"p u m" "l . r" ". d .";touch-action:none}
 #dpad button{margin:0;padding:0;min-height:0;font-size:36px;background:var(--panel);color:var(--panel-text);touch-action:none}
