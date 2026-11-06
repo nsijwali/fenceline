@@ -2,7 +2,7 @@
 <html lang="en" data-theme="day">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Fenceline</title>
 <meta name="description" content="Fenceline is a free pixel arcade game you can play in your browser. Draw fences across open ground to claim land before the pterodactyl reaches your line. No login, works offline.">
 <meta name="theme-color" content="#f7f7f7">
@@ -90,6 +90,16 @@ html{height:100%}
 @media (pointer:coarse){.mark,.btns{display:none}.stats{flex:1 1 100%;justify-content:space-between;gap:var(--s2)}}
 @media (max-width:480px){.stats{gap:var(--s1)}.st b{font-size:22px;line-height:27px}#hLives{min-width:0}}
 @media (max-height:520px){.mark{display:none}}
+@media (orientation:landscape) and (max-height:520px) and (pointer:coarse){
+#app{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-rows:auto auto 1fr;grid-template-areas:"hud wrap dpad" "prog wrap dpad" ". wrap dpad";justify-content:center;align-content:center;align-items:start;justify-items:stretch;column-gap:var(--s3);row-gap:var(--s2)}
+#hud{grid-area:hud;width:100%}
+#app #prog{grid-area:prog;width:100%}
+#wrap{grid-area:wrap;align-self:center;justify-self:center}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2) var(--s3);flex:1 1 100%}
+#app #dpad{grid-area:dpad;align-self:center;justify-self:center;grid-template-columns:repeat(3,62px);grid-template-rows:repeat(3,44px);gap:var(--s2)}
+#app #dpad button{font-size:27px}
+#app #dpad #bPause,#app #dpad #bMute{font-size:18px;padding:0}
+}
 
 #prog{width:var(--hw,var(--w))}
 .bar{position:relative;height:16px;margin:4px;background:var(--panel)}
@@ -114,6 +124,7 @@ button.primary:hover{background:var(--bg);color:var(--text)}
 .panel h2{margin:0;min-width:0;text-wrap:balance;font-size:36px;line-height:40px;font-weight:400}
 .panel p{margin:0;max-width:65ch;font-size:18px;line-height:28px}
 .panel .fine{color:var(--panel-muted)}
+.panel .quick{display:none;font-weight:700}
 .panel button{justify-self:start;background:var(--panel);color:var(--panel-text)}
 .panel button:hover{background:var(--panel-text);color:var(--panel)}
 .panel button.primary{background:var(--accent);color:var(--accent-ink)}
@@ -128,7 +139,9 @@ button.primary:hover{background:var(--bg);color:var(--text)}
 .legend li{display:grid;grid-template-columns:44px 1fr;gap:var(--s3);align-items:center;font-size:18px;line-height:28px}
 .key{justify-self:center}
 #ov{touch-action:pan-y}
-@media (max-width:600px){#ov{align-items:flex-start;padding:var(--s3)}.panel{max-height:none;padding:var(--s4);gap:var(--s2)}.panel .credit a{padding:4px 0}.legend{gap:var(--s2)}.legend li{grid-template-columns:40px 1fr;gap:var(--s2);line-height:24px}.panel h2{font-size:27px;line-height:32px}.panel .fine{display:none}.panel:has(.legend:not([hidden])) #ovP{display:none}}
+/* Small or short screens: the panel scrolls, but Play stays pinned at the bottom of the board. */
+@media (max-width:600px),(max-height:520px){.panel{display:flex;flex-direction:column;max-height:none;padding:var(--s3);gap:var(--s2)}.panel h2{font-size:27px;line-height:32px}.panel .fine{display:none}.panel:has(.legend:not([hidden])) #ovP{display:none}.panel:has(.legend:not([hidden])) .quick:not([hidden]){display:block}.panel .actions{display:contents}.panel #ovBtn{position:sticky;bottom:0;align-self:stretch;margin:var(--s1);outline:var(--s2) solid var(--panel)}.panel .credit{order:1}}
+@media (max-width:600px){#ov{align-items:flex-start;padding:var(--s3)}.panel{max-height:none;padding:var(--s4);gap:var(--s2)}.panel .credit a{padding:4px 0}.legend{gap:var(--s2)}.legend li{grid-template-columns:40px 1fr;gap:var(--s2);line-height:24px}.panel h2{font-size:27px;line-height:32px}.panel .fine{display:none}.panel:has(.legend:not([hidden])) #ovP{display:none}.panel:has(.legend:not([hidden])) .quick:not([hidden]){display:block}}
 
 #dpad{display:none;grid-template-columns:repeat(3,76px);grid-template-rows:repeat(3,48px);gap:var(--s3);grid-template-areas:"p u m" "l . r" ". d .";touch-action:none}
 #dpad button{margin:0;padding:0;min-height:0;font-size:36px;background:var(--panel);color:var(--panel-text);touch-action:none}
@@ -162,6 +175,7 @@ button.primary:hover{background:var(--bg);color:var(--text)}
       <div class="panel">
         <h2 id="ovT"></h2>
         <p id="ovP"></p>
+        <p class="quick" id="ovQuick" hidden>Swipe or use arrow keys to move. Close a fence to claim land. Reach <span id="ovTarget">70</span>%.</p>
         <ul class="legend" id="ovLegend" hidden>
           <li><canvas class="key" id="keyYou" aria-hidden="true"></canvas><span><b>You.</b> Walk the walls. Step into open ground to draw.</span></li>
           <li><canvas class="key" id="keyPtero" aria-hidden="true"></canvas><span><b>Pterodactyl.</b> Its dotted line is deadly to your unfinished line.</span></li>
@@ -586,7 +600,7 @@ function togglePause() {
 /* ---------- overlay + hud ---------- */
 function showMsg(o) {
   $('ovT').textContent = o.title; $('ovP').textContent = o.text || ''; $('ovP').hidden = !o.text;
-  $('ovLegend').hidden = !o.legend; $('ovCredit').hidden = !(o.legend || o.credit); $('ovC').textContent = o.hint || ''; $('ovC').hidden = !o.hint;
+  $('ovLegend').hidden = !o.legend; $('ovQuick').hidden = !o.legend; $('ovTarget').textContent = targetFor(1); $('ovCredit').hidden = !(o.legend || o.credit); $('ovC').textContent = o.hint || ''; $('ovC').hidden = !o.hint;
   const b = $('ovBtn');
   if (o.btn) { b.hidden = false; b.textContent = o.btn; ovAction = o.fn; b.disabled = !!o.lock; if (!o.lock) b.focus({preventScroll: true}); }
   else { b.hidden = true; ovAction = null; }
@@ -606,7 +620,7 @@ function updateHud() {
 
 /* ---------- game flow ---------- */
 function start() {
-  score = 0; lives = 3; paused = false; $('bPause').textContent = 'Pause'; sfx('start');
+  score = 0; lives = 3; lastWhy = ''; paused = false; $('bPause').textContent = 'Pause'; sfx('start');
   newLevel(1); state = 'play'; hideMsg(); musicStart(0); say('Level 1. ' + LOOK[THEMES[0]].name + '.');
 }
 function gameOver() {
@@ -614,13 +628,17 @@ function gameOver() {
   const isBest = score > best;
   if (isBest) { best = score; try { localStorage.setItem('fenceline.best', String(best)); } catch (e) {} }
   updateHud();
-  showMsg({title: 'Game over', text: 'Score ' + score + ' on level ' + level + (isBest ? '. New best.' : '. Best is ' + best + '.'), btn: 'Play again', fn: start, lock: true});
+  showMsg({title: 'Game over', text: 'Score ' + score + ' on level ' + level + (isBest ? '. New best.' : '. Best is ' + best + '.') + (lastWhy ? ' ' + lastWhy : ''), btn: 'Play again', fn: start, lock: true});
 }
-function die(spark) {
+const WHY = {fence: ['Fence hit', 'The pterodactyl hit your fence.'], crawler: ['Crawler!', 'A crawler caught you.']};
+let lastWhy = '';
+function die(why, spark) {
   if (inv > 0 || state !== 'play') return;
-  lives--; if (!RM) shake = .45; freeze = .55; sfx('die'); musicDuck(); say('Life lost. ' + Math.max(0, lives) + ' left.');
+  lastWhy = WHY[why][1];
+  lives--; if (!RM) shake = .45; freeze = .55; sfx('die'); musicDuck(); say('Life lost. ' + WHY[why][1] + ' ' + Math.max(0, lives) + ' left.');
   if (drawing) { for (const i of trail) grid[i] = 0; trail = []; drawing = false; px = origin.x; py = origin.y; }
   if (spark) relocateSpark(spark);
+  popups.push({x: px, y: py - 2, text: WHY[why][0], life: 1.6});
   inv = 2; updateHud();
   if (lives <= 0) gameOver();
 }
@@ -689,7 +707,7 @@ function updateWisp(w, dt) {
     }
     const nx = w.x + w.vx * hh, ny = w.y + w.vy * hh;
     const cx = at(nx, w.y), cy = at(w.x, ny), cd = at(nx, ny);
-    if (cx === 2 || cy === 2 || cd === 2) { die(); return; }
+    if (cx === 2 || cy === 2 || cd === 2) { die('fence'); return; }
     let bx = cx !== 0, by = cy !== 0;
     if (!bx && !by && cd !== 0) bx = by = true;
     if (bx) w.vx = -w.vx; else w.x = nx;
@@ -701,7 +719,7 @@ function updateWisp(w, dt) {
     const ca = Math.cos(w.a) * sg, sa = Math.sin(w.a) * sg; let t = 0;
     for (; t < w.len; t += .5) {
       const v = at(w.x + ca * t, w.y + sa * t);
-      if (v === 2) { die(); return; }
+      if (v === 2) { die('fence'); return; }
       if (v !== 0) break;
     }
     ends.push(w.x + ca * t, w.y + sa * t);
@@ -728,7 +746,7 @@ function relocateSpark(s) {
 }
 function sparkHit() {
   if (drawing || inv > 0) return;
-  for (const s of sparks) if (s.x === px && s.y === py) { die(s); return; }
+  for (const s of sparks) if (s.x === px && s.y === py) { die('crawler', s); return; }
 }
 
 /* ---------- update ---------- */
@@ -826,19 +844,25 @@ function draw() {
     const key = p.text + P.text + P.bg, tc = popCache[key] || (popCache[key] = textCanvas(p.text, P.text, P.bg));
     ctx.globalAlpha = Math.min(1, p.life * 1.5);
     const yy = p.y - (1.3 - p.life) * 3, w = tc.width / SUB, h = tc.height / SUB;
-    ctx.drawImage(tc, Math.round((p.x + .5 - w / 2) * SUB) / SUB, Math.round((yy - h) * SUB) / SUB, w, h);
+    const xx = Math.max(0, Math.min(W - w, p.x + .5 - w / 2));
+    ctx.drawImage(tc, Math.round(xx * SUB) / SUB, Math.round((yy - h) * SUB) / SUB, w, h);
   }
   ctx.globalAlpha = 1;
 }
 
 /* ---------- layout + loop ---------- */
+const LANDSCAPE_PHONE = matchMedia('(orientation: landscape) and (max-height: 520px) and (pointer: coarse)');
 function resize() {
   dpr = Math.min(window.devicePixelRatio || 1, 2);
   const dp = $('dpad'), dpH = getComputedStyle(dp).display === 'none' ? 0 : dp.offsetHeight + 8;
   const aspect = (W + 2 * MARGIN) / (H + 2 * MARGIN), availW = Math.min(innerWidth - 32, 1200);
   let cssW = availW;
   const appCs = getComputedStyle($('app')), padV = parseFloat(appCs.paddingTop) + parseFloat(appCs.paddingBottom);
-  for (let pass = 0; pass < 2; pass++) {
+  if (LANDSCAPE_PHONE.matches) {
+    // Side columns hold the stats (left) and the pad (right); the board gets the rest.
+    const padH = parseFloat(appCs.paddingLeft) + parseFloat(appCs.paddingRight), side = 202, gap = 12;
+    cssW = Math.max(220, Math.floor(Math.min(innerWidth - padH - 2 * side - 2 * gap - 8, (innerHeight - padV - 8) * aspect)));
+  } else for (let pass = 0; pass < 2; pass++) {
     $('app').style.setProperty('--w', cssW + 'px');
     const used = $('hud').offsetHeight + $('prog').offsetHeight + dpH + padV + 12 * 3 + 16;
     cssW = Math.max(220, Math.floor(Math.min(availW, (innerHeight - used) * aspect)));
