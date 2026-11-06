@@ -462,6 +462,7 @@ function musicStep(T, step, t) {
 function musicTick() {
   if (!M.on || !AC) return;
   const T = TRACKS[M.track], sp = 60 / T.bpm / 4;
+  if (M.nextT < AC.currentTime - .5) M.nextT = AC.currentTime + .05; // fell far behind (stalled or throttled timer): skip ahead instead of bursting catch-up notes
   while (M.nextT < AC.currentTime + .18) {
     musicStep(T, M.step, M.nextT);
     M.nextT += sp; M.step = (M.step + 1) % (T.bars.length * 16);
@@ -676,8 +677,15 @@ function closeTrail() {
   trail = []; drawing = false;
   const vis = new Uint8Array(N), q = new Int32Array(N); let h = 0, t = 0;
   for (const w of wisps) {
-    const s = idx(Math.floor(w.x), Math.floor(w.y));
-    if (grid[s] === 0 && !vis[s]) { vis[s] = 1; q[t++] = s; }
+    // A wisp can sit on a cell that just became fence (it overlaps the trail while invincible).
+    // Seed from the cell itself, else from its open neighbours, so its region is never claimed.
+    const cx = Math.floor(w.x), cy = Math.floor(w.y);
+    for (const [dx, dy] of [[0, 0], [-1, 0], [1, 0], [0, -1], [0, 1]]) {
+      const x = cx + dx, y = cy + dy;
+      if (x < 0 || y < 0 || x >= W || y >= H) continue;
+      const s = idx(x, y);
+      if (grid[s] === 0) { if (!vis[s]) { vis[s] = 1; q[t++] = s; } if (dx === 0 && dy === 0) break; }
+    }
   }
   while (h < t) {
     const i = q[h++], x = i % W, y = (i / W) | 0;
