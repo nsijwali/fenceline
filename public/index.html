@@ -90,7 +90,9 @@ html{height:100%}
 @media (pointer:coarse){.mark,.btns{display:none}.stats{flex:1 1 100%;justify-content:space-between;gap:var(--s2)}}
 @media (max-width:480px){.stats{gap:var(--s1)}.st b{font-size:22px;line-height:27px}#hLives{min-width:0}}
 @media (max-height:520px){.mark{display:none}}
-@media (orientation:landscape) and (max-height:520px) and (pointer:coarse){
+@media (orientation:landscape) and (max-height:520px){
+#app #ov{position:fixed;z-index:5;justify-content:center;align-items:flex-start;padding:var(--s2)}
+#ov .panel{width:min(44rem,100%);margin:auto}
 #app{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-rows:auto auto 1fr;grid-template-areas:"hud wrap dpad" "prog wrap dpad" ". wrap dpad";justify-content:center;align-content:center;align-items:start;justify-items:stretch;column-gap:var(--s3);row-gap:var(--s2)}
 #hud{grid-area:hud;width:100%}
 #app #prog{grid-area:prog;width:100%}
@@ -851,7 +853,7 @@ function draw() {
 }
 
 /* ---------- layout + loop ---------- */
-const LANDSCAPE_PHONE = matchMedia('(orientation: landscape) and (max-height: 520px) and (pointer: coarse)');
+const LANDSCAPE_PHONE = matchMedia('(orientation: landscape) and (max-height: 520px)');
 function resize() {
   dpr = Math.min(window.devicePixelRatio || 1, 2);
   const dp = $('dpad'), dpH = getComputedStyle(dp).display === 'none' ? 0 : dp.offsetHeight + 8;
