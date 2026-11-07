@@ -676,16 +676,22 @@ function closeTrail() {
   for (const i of trail) grid[i] = 1;
   trail = []; drawing = false;
   const vis = new Uint8Array(N), q = new Int32Array(N); let h = 0, t = 0;
+  const seed = (x, y) => {
+    if (x < 0 || y < 0 || x >= W || y >= H) return false;
+    const s = idx(x, y);
+    if (grid[s] !== 0) return false;
+    if (!vis[s]) { vis[s] = 1; q[t++] = s; }
+    return true;
+  };
   for (const w of wisps) {
-    // A wisp can sit on a cell that just became fence (it overlaps the trail while invincible).
-    // Seed from the cell itself, else from its open neighbours, so its region is never claimed.
     const cx = Math.floor(w.x), cy = Math.floor(w.y);
-    for (const [dx, dy] of [[0, 0], [-1, 0], [1, 0], [0, -1], [0, 1]]) {
-      const x = cx + dx, y = cy + dy;
-      if (x < 0 || y < 0 || x >= W || y >= H) continue;
-      const s = idx(x, y);
-      if (grid[s] === 0) { if (!vis[s]) { vis[s] = 1; q[t++] = s; } if (dx === 0 && dy === 0) break; }
-    }
+    if (seed(cx, cy)) continue;
+    // The wisp sits on a cell that just became fence (it overlapped the trail while invincible).
+    // Seed the side it came from: step back along its velocity until open ground, so its region is never claimed.
+    const sp = Math.hypot(w.vx, w.vy) || 1;
+    let found = false;
+    for (let d = .5; d <= 4 && !found; d += .5) found = seed(Math.floor(w.x - w.vx / sp * d), Math.floor(w.y - w.vy / sp * d));
+    if (!found) for (const [dx, dy] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) seed(cx + dx, cy + dy);
   }
   while (h < t) {
     const i = q[h++], x = i % W, y = (i / W) | 0;
