@@ -242,7 +242,7 @@ let themeIdx = 0, P = {};
 let state = 'title', paused = false, ovAction = null;
 let level = 1, score = 0, lives = 3, best = 0, target = 70, base = 0, pct = 0;
 let px = 0, py = 0, drawing = false, origin = {x:0,y:0}, trail = [];
-let wisps = [], sparks = [], popups = [], stars = [], clouds = [];
+let wisps = [], sparks = [], popups = [], marks = [], stars = [], clouds = [];
 let inv = 0, freeze = 0, shake = 0, clearT = 0, overT = 0, pAcc = 0, time = 0, dirty = true, dpr = 1, cs = 8;
 const P_INT = 0.04;                         // seconds per player step
 try { best = +localStorage.getItem('fenceline.best') || 0; } catch (e) {}
@@ -533,7 +533,7 @@ function newLevel(n) {
   base = 0; for (let i = 0; i < N; i++) if (grid[i] === 1) base++;
   pct = 0; dirty = true;
   px = W >> 1; py = H - 1; drawing = false; trail = []; origin = {x: px, y: py};
-  popups = []; inv = 1.2; freeze = 0; pAcc = 0;
+  popups = []; marks = []; inv = 1.2; freeze = 0; pAcc = 0;
   wisps = [];
   const wc = n < 3 ? 1 : n < 6 ? 2 : 3;
   for (let i = 0; i < wc; i++) {
@@ -635,13 +635,16 @@ function gameOver() {
 }
 const WHY = {fence: ['Fence hit', 'The pterodactyl hit your fence.'], crawler: ['Crawler!', 'A crawler caught you.']};
 let lastWhy = '';
-function die(why, spark) {
+function die(why, spark, hx, hy) {
   if (inv > 0 || state !== 'play') return;
+  // Mark exactly what hit the player: the crawler's cell, or the point where the bird touched the fence.
+  const mx = spark ? spark.x : hx, my = spark ? spark.y : hy;
+  if (mx !== undefined) marks.push({x: mx, y: my, life: 1.8, why});
   lastWhy = WHY[why][1];
   lives--; if (!RM) shake = .45; freeze = .55; sfx('die'); musicDuck(); say('Life lost. ' + WHY[why][1] + ' ' + Math.max(0, lives) + ' left.');
   if (drawing) { for (const i of trail) grid[i] = 0; trail = []; drawing = false; px = origin.x; py = origin.y; }
   if (spark) relocateSpark(spark);
-  popups.push({x: px, y: py - 2, text: WHY[why][0], life: 1.6});
+  popups.push({x: mx !== undefined ? mx : px, y: (mx !== undefined ? my : py) - 3, text: WHY[why][0], life: 1.6});
   inv = 2; updateHud();
   if (lives <= 0) gameOver();
 }
@@ -723,7 +726,7 @@ function updateWisp(w, dt) {
     }
     const nx = w.x + w.vx * hh, ny = w.y + w.vy * hh;
     const cx = at(nx, w.y), cy = at(w.x, ny), cd = at(nx, ny);
-    if (cx === 2 || cy === 2 || cd === 2) { die('fence'); return; }
+    if (cx === 2 || cy === 2 || cd === 2) { die('fence', null, nx, ny); return; }
     let bx = cx !== 0, by = cy !== 0;
     if (!bx && !by && cd !== 0) bx = by = true;
     if (bx) w.vx = -w.vx; else w.x = nx;
@@ -735,7 +738,7 @@ function updateWisp(w, dt) {
     const ca = Math.cos(w.a) * sg, sa = Math.sin(w.a) * sg; let t = 0;
     for (; t < w.len; t += .5) {
       const v = at(w.x + ca * t, w.y + sa * t);
-      if (v === 2) { die('fence'); return; }
+      if (v === 2) { die('fence', null, w.x + ca * t, w.y + sa * t); return; }
       if (v !== 0) break;
     }
     ends.push(w.x + ca * t, w.y + sa * t);
@@ -772,6 +775,8 @@ function update(dt) {
   if (shake > 0) shake = Math.max(0, shake - dt);
   for (const p of popups) p.life -= dt;
   popups = popups.filter(p => p.life > 0);
+  for (const m of marks) m.life -= dt;
+  marks = marks.filter(m => m.life > 0);
   if (state === 'over' && overT > 0) { overT -= dt; if (overT <= 0) { $('ovBtn').disabled = false; $('ovBtn').focus({preventScroll: true}); } }
   if (state === 'title') { if (!RM) for (const w of wisps) updateWisp(w, dt); return; }
   if (paused) return;
@@ -855,6 +860,17 @@ function draw() {
   // player
   const blink = inv > 0 && Math.floor(time * 12) % 2 === 0;
   if (!blink && state !== 'title') blit(SPR.kid[drawing ? 1 : 0], px + .5, py + .5, false, 0);
+  // what hit the player: blinking corner brackets around the culprit
+  for (const m of marks) {
+    if (!RM && Math.floor(time * 10) % 2 === 0) continue;
+    const cx = Math.floor(m.x), cy = Math.floor(m.y), r = 3;
+    ctx.globalAlpha = Math.min(1, m.life * 2); ctx.fillStyle = P.text;
+    for (const sx of [-1, 1]) for (const sy of [-1, 1]) {
+      const ox = cx + sx * r, oy = cy + sy * r;
+      for (let k = 0; k < 3; k++) { ctx.fillRect(ox - sx * k, oy, 1, 1); ctx.fillRect(ox, oy - sy * k, 1, 1); }
+    }
+  }
+  ctx.globalAlpha = 1;
   // popups
   for (const p of popups) {
     const key = p.text + P.text + P.bg, tc = popCache[key] || (popCache[key] = textCanvas(p.text, P.text, P.bg));
